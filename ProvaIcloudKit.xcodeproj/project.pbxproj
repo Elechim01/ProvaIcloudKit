@@ -13,6 +13,9 @@
 		C42AC0F7268D1628009B5ADE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C42AC0F6268D1628009B5ADE /* Preview Assets.xcassets */; };
 		C42AC0F9268D1628009B5ADE /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42AC0F8268D1628009B5ADE /* Persistence.swift */; };
 		C42AC0FC268D1628009B5ADE /* ProvaIcloudKit.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C42AC0FA268D1628009B5ADE /* ProvaIcloudKit.xcdatamodeld */; };
+		C42AC106268D167C009B5ADE /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42AC105268D167C009B5ADE /* CloudKit.framework */; };
+		C42AC109268D1B23009B5ADE /* CloudController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42AC108268D1B23009B5ADE /* CloudController.swift */; };
+		C42AC10B268D1DDE009B5ADE /* Nota.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42AC10A268D1DDE009B5ADE /* Nota.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,10 @@
 		C42AC0F8268D1628009B5ADE /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		C42AC0FB268D1628009B5ADE /* ProvaIcloudKit.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProvaIcloudKit.xcdatamodel; sourceTree = "<group>"; };
 		C42AC0FD268D1628009B5ADE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C42AC103268D166F009B5ADE /* ProvaIcloudKit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProvaIcloudKit.entitlements; sourceTree = "<group>"; };
+		C42AC105268D167C009B5ADE /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		C42AC108268D1B23009B5ADE /* CloudController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudController.swift; sourceTree = "<group>"; };
+		C42AC10A268D1DDE009B5ADE /* Nota.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Nota.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42AC106268D167C009B5ADE /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +50,7 @@
 			children = (
 				C42AC0EE268D1625009B5ADE /* ProvaIcloudKit */,
 				C42AC0ED268D1625009B5ADE /* Products */,
+				C42AC104268D167C009B5ADE /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,6 +65,8 @@
 		C42AC0EE268D1625009B5ADE /* ProvaIcloudKit */ = {
 			isa = PBXGroup;
 			children = (
+				C42AC107268D1B0E009B5ADE /* ModelCloud */,
+				C42AC103268D166F009B5ADE /* ProvaIcloudKit.entitlements */,
 				C42AC0EF268D1625009B5ADE /* ProvaIcloudKitApp.swift */,
 				C42AC0F1268D1625009B5ADE /* ContentView.swift */,
 				C42AC0F3268D1628009B5ADE /* Assets.xcassets */,
@@ -73,6 +84,23 @@
 				C42AC0F6268D1628009B5ADE /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C42AC104268D167C009B5ADE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C42AC105268D167C009B5ADE /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C42AC107268D1B0E009B5ADE /* ModelCloud */ = {
+			isa = PBXGroup;
+			children = (
+				C42AC108268D1B23009B5ADE /* CloudController.swift */,
+				C42AC10A268D1DDE009B5ADE /* Nota.swift */,
+			);
+			path = ModelCloud;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,10 +172,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42AC109268D1B23009B5ADE /* CloudController.swift in Sources */,
 				C42AC0F9268D1628009B5ADE /* Persistence.swift in Sources */,
 				C42AC0F2268D1625009B5ADE /* ContentView.swift in Sources */,
 				C42AC0F0268D1625009B5ADE /* ProvaIcloudKitApp.swift in Sources */,
 				C42AC0FC268D1628009B5ADE /* ProvaIcloudKit.xcdatamodeld in Sources */,
+				C42AC10B268D1DDE009B5ADE /* Nota.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +305,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ProvaIcloudKit/ProvaIcloudKit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ProvaIcloudKit/Preview Content\"";
 				DEVELOPMENT_TEAM = G7DSPSWXXC;
@@ -297,6 +328,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ProvaIcloudKit/ProvaIcloudKit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"ProvaIcloudKit/Preview Content\"";
 				DEVELOPMENT_TEAM = G7DSPSWXXC;

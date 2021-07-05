@@ -7,71 +7,98 @@
 
 import SwiftUI
 import CoreData
+import CloudKit
 
-struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+struct ContentView: View,CloudControllerDelegate {
+    
+    
+    func errorUpdating(error: NSError) {
+        mesaggio = error.localizedDescription
+        alert.toggle()
+    }
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
+    func modelUpdate() {
+        print("update")
+//        cloudCtr.recuperaNote()
+    }
+    
+   @StateObject var cloudCtr = CloudController()
+//    init() {
+//        cloudCtr.delegate = self
+//        cloudCtr.recuperaNote()
+//    }
+//    Creo un alert
+    @State var alert : Bool = false
+    @State var mesaggio : String = ""
+   @State var timer = Timer()
     var body: some View {
-        List {
-            ForEach(items) { item in
-                Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-            }
-            .onDelete(perform: deleteItems)
-        }
-        .toolbar {
-            #if os(iOS)
-            EditButton()
-            #endif
+        
+            VStack {
+                HStack {
+                    Text("prova Icloud")
+                    Text("\(cloudCtr.noteArray.count)")
+                    Button(action: {
+                        cloudCtr.salvaNota(titolo: "Ciao", testo: "come va ")
+                        cloudCtr.noteArray = []
+                        RecuperaElementi()
+                    }, label: {
+                        Text("Aggiungi nota")
+                    })
+                }
+                .padding()
+                Button(action: {
+                    cloudCtr.noteArray = []
+                    RecuperaElementi()
+                }, label: {
+                    Text("Legi")
+                })
+                .padding()
+                    List(cloudCtr.noteArray, id: \.self){ nota in
+//                        HStack{
+                            Text("\(nota.testo), \(nota.titolo)")
+                            Button {
+                                self.cloudCtr.EliminaElemento(nota: nota)
+                                cloudCtr.noteArray = []
+                                cloudCtr.recuperaNote()
+                            } label: {
+                                Text("elimina")
+                            }
 
-            Button(action: addItem) {
-                Label("Add Item", systemImage: "plus")
+//                        }
+                        
+//                    .onDelete { index in
+//
+//                        self.cloudCtr.noteArray.remove(atOffsets: index)
+//
+//                    }
+                }
+                
             }
-        }
+            .alert(isPresented: $alert, content: {
+                Alert(title: Text("Errore Cloudkit"), message: Text("\(mesaggio)"), dismissButton: .default(Text("Chiudi")))
+        })
+            .onAppear{
+                RecuperaElementi()
+                
+                
+            }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+    
+    func RecuperaElementi(){
+        var secondi = 0.0
+//        DispatchQueue.global(qos: .background).async {
+//            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { temp in
+//                    while(true){
+                self.cloudCtr.recuperaNote()
+//                    secondi += 0.01
+//                    }
+//                    }
+//        }
     }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
+    
+    
+    
 }
-
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
